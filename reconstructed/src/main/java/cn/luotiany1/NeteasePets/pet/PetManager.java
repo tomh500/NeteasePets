@@ -292,10 +292,13 @@ public final class PetManager implements Listener, CommandExecutor, TabCompleter
     private static void face(Fox f, Location to) {
         Location a = f.getLocation();
         Vector d = to.toVector().subtract(a.toVector());
-        double h = Math.hypot(d.getX(), d.getZ());
-        float yaw = (float)Math.toDegrees(Math.atan2(-d.getX(), d.getZ()));
-        float pitch = (float)-Math.toDegrees(Math.atan2(d.getY(), h));
-        f.setRotation(yaw, Math.max(-60, Math.min(60, pitch)));
+        if (d.getX() * d.getX() + d.getZ() * d.getZ() < 1e-6) return;
+        float dst = (float)Math.toDegrees(Math.atan2(-d.getX(), d.getZ()));
+        float now = a.getYaw();
+        float dif = (dst - now + 540) % 360 - 180;
+        if (Math.abs(dif) < 2.5f) return;
+        float step = Math.max(-12, Math.min(12, dif));
+        f.setRotation(now + step, 0);
     }
 
     private static Location safeSpot(Player p) {
