@@ -28,6 +28,7 @@ public final class NeteasePetsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(bag, this);
         getServer().getPluginManager().registerEvents(pet, this);
         getCommand("npets").setExecutor(pet);
+        getCommand("npets").setTabCompleter(pet);
         pet.start();
         getLogger().info("存储后端: " + db.name());
     }

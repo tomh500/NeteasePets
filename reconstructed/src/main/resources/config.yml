@@ -1,6 +1,14 @@
 # 可选: file（本地二进制文件）或 mysql（云端 MySQL）
 storage: file
 
+pet:
+  # 距离小于此值时伙伴会坐下并注视玩家。
+  follow-distance: 2.8
+  # 仅在跨世界或严重掉队时传送；正常情况使用平滑移动。
+  teleport-distance: 18.0
+  # 平滑跟随的最高水平速度（格/tick）。
+  max-speed: 0.42
+
 mysql:
   # IPv4/域名示例: db.example.com
   # IPv6 示例: 2001:db8::1234（可带或不带方括号）

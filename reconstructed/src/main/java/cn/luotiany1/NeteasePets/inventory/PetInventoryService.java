@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class PetInventoryService implements Listener {
     public static final String TITLE = "狐狸背包";
-    private static final int SIZE = 27, OPEN = 9;
+    private static final int SIZE = 27, OPEN = 4;
 
     private final JavaPlugin pl;
     private final Storage db;
@@ -96,9 +96,11 @@ public final class PetInventoryService implements Listener {
                 } catch (Exception e) {
                     pl.getLogger().severe("解析 " + id + " 的背包失败: " + e.getMessage());
                 }
+                boolean overflow = a.length > OPEN;
+                if (overflow) giveOverflow(p, a);
                 var inv = make(a);
                 var old = bag.putIfAbsent(id, inv);
-                if (data == null && a.length != 0) save(id, old == null ? inv : old);
+                if ((data == null && a.length != 0) || overflow) save(id, old == null ? inv : old);
                 if (openWhenReady.remove(id)) p.openInventory(old == null ? inv : old);
             });
         });
@@ -112,6 +114,16 @@ public final class PetInventoryService implements Listener {
         var wall = new ItemStack(Material.BARRIER);
         for (int i = OPEN; i < SIZE; ++i) inv.setItem(i, wall);
         return inv;
+    }
+
+    private void giveOverflow(Player p, ItemStack[] a) {
+        boolean any = false;
+        for (int i = OPEN; i < a.length; ++i) {
+            if (a[i] == null || a[i].getType() == Material.AIR) continue;
+            any = true;
+            p.getInventory().addItem(a[i]).values().forEach(x -> p.getWorld().dropItemNaturally(p.getLocation(), x));
+        }
+        if (any) p.sendMessage("§e背包已缩减为 4 格，原第 5–9 格物品已返还，放不下的掉在脚边。§r");
     }
 
     private void save(UUID id, Inventory inv) {

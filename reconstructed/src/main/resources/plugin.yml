@@ -5,4 +5,5 @@ api-version: '1.20'
 commands:
   npets:
     aliases: [neteasepets]
-    description: 管理你的宠物狐狸
+    description: 管理你的伙伴狐狸
+    usage: /npets [menu|show|hide|follow|stay|sleep|spin|happy|red|snow|beacon|music|share|others]
