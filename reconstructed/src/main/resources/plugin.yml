@@ -1,0 +1,8 @@
+name: NeteasePets
+main: cn.luotiany1.NeteasePets.NeteasePetsPlugin
+version: 1.0
+api-version: '1.20'
+commands:
+  npets:
+    aliases: [neteasepets]
+    description: 管理你的宠物狐狸

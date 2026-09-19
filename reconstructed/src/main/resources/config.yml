@@ -1,0 +1,18 @@
+# 可选: file（本地二进制文件）或 mysql（云端 MySQL）
+storage: file
+
+mysql:
+  # IPv4/域名示例: db.example.com
+  # IPv6 示例: 2001:db8::1234（可带或不带方括号）
+  host: localhost
+  port: 3306
+  database: minecraft
+  table: npets_inventory
+  username: npets
+  password: change-me
+
+  # 公网数据库建议保持开启；自签名证书需正确配置 JVM 信任库。
+  ssl: true
+  allow-public-key-retrieval: false
+  connect-timeout-seconds: 10
+  socket-timeout-seconds: 15
